@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Shared Worker example: square</title>
+    </head>
+    <body>
+        <form>
+            <div>
+                <label for="number">Square number : </label>
+                <input type="text" id="number" value="0">
+            </div>
+        </form>
+        <p id="result">Result: 0</p>
+        
+        <script>
+        
+        let number = document.querySelector('#number');
+
+        let worker = new SharedWorker("multiplicator_worker.js");
+
+        let result = document.querySelector('#result');
+
+        number.onchange = function() {
+            
+            worker.port.postMessage([number.value, number.value]);
+            
+            console.log('Message posted to worker');
+        }
+
+        worker.port.onmessage = function(e) {
+            
+            console.log('Message received from worker');
+
+            result.textContent = e.data;
+        }
+
+        </script>
+    </body>
+</html>

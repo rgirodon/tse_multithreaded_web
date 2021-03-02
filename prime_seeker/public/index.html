@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Worker example: prime seeker</title>
+    </head>
+    <body>
+        <p>The highest prime number discovered so far is: 
+            <span id="lastPrime"></span>
+        </p>
+        <script>
+        
+        let worker = new Worker('worker.js');
+
+        worker.onmessage = function (event) {
+            document.getElementById('lastPrime').textContent = event.data;
+        };
+
+        </script>
+    </body>
+</html>
